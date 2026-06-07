@@ -1,7 +1,6 @@
 {
-  "buildCommand": "cd frontend && corepack prepare pnpm@10.33.2 --activate && pnpm install --frozen-lockfile && npx vite build",
+  "buildCommand": "cd frontend && npm install --legacy-peer-deps && npx vite build",
   "outputDirectory": "backend/internal/web/dist",
-  "installCommand": "cd frontend && corepack prepare pnpm@10.33.2 --activate && pnpm install --frozen-lockfile",
   "framework": null,
   "rewrites": [
     {
