@@ -5,19 +5,19 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "http://74.48.140.135:5801/api/$1"
+      "destination": "https://api.coolapihub.khtain.com/api/$1"
     },
     {
       "source": "/v1/(.*)",
-      "destination": "http://74.48.140.135:5801/v1/$1"
+      "destination": "https://api.coolapihub.khtain.com/v1/$1"
     },
     {
       "source": "/setup/(.*)",
-      "destination": "http://74.48.140.135:5801/setup/$1"
+      "destination": "https://api.coolapihub.khtain.com/setup/$1"
     },
     {
       "source": "/health",
-      "destination": "http://74.48.140.135:5801/health"
+      "destination": "https://api.coolapihub.khtain.com/health"
     },
     {
       "source": "/((?!assets/|logo.png|favicon.ico).*)",
