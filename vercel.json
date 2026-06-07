@@ -1,0 +1,24 @@
+{
+  "buildCommand": "cd frontend && corepack enable && pnpm install --frozen-lockfile && npx vite build",
+  "outputDirectory": "backend/internal/web/dist",
+  "installCommand": "cd frontend && corepack enable && pnpm install --frozen-lockfile",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://YOUR_BACKEND_URL/api/$1"
+    },
+    {
+      "source": "/v1/(.*)",
+      "destination": "https://YOUR_BACKEND_URL/v1/$1"
+    },
+    {
+      "source": "/setup/(.*)",
+      "destination": "https://YOUR_BACKEND_URL/setup/$1"
+    },
+    {
+      "source": "/((?!assets/|logo.png|favicon.ico).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
