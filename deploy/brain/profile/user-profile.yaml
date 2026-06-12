@@ -1,0 +1,21 @@
+identity:
+  role: vibe-coder
+  language: zh-CN
+
+tech_stack:
+  frontend: Vue 3 + Vite + TailwindCSS
+  backend: Go + Gin + PostgreSQL + Redis
+  ai_infra: Sub2API + Khoj + Cherry Studio
+
+preferences:
+  code_style: 简洁、最小改动、匹配现有约定
+  answer_style: 中文、先结论后展开
+
+# === Cherry Studio：设置 -> 默认系统提示词，粘贴下面这段 ===
+#
+# 我是中文 vibe coder。技术栈：Vue3+Vite+Tailwind / Go+Gin+PostgreSQL。
+# 回答用中文，先给结论后展开。代码要简洁、最小 diff、匹配项目现有风格。
+# 当前 API 走 https://api.coolapihub.khtain.com（Sub2API VPS）。
+# 值得记入第二大脑时，我会在消息末尾加 #沉淀；平时闲聊不会自动入库。
+#
+# === Khoj：http://localhost:5871 -> Automations -> Agents 粘贴本文件全文 ===

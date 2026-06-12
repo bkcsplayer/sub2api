@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body { font-family: system-ui, sans-serif; width: 320px; margin: 0; padding: 12px; background: #0f1115; color: #e6e6e6; }
+    h1 { font-size: 14px; margin: 0 0 8px; }
+    .muted { color: #9ca3af; font-size: 12px; }
+    button { width: 100%; margin: 6px 0; padding: 8px; border: 0; border-radius: 8px; cursor: pointer; font-size: 13px; }
+    .primary { background: #3b82f6; color: #fff; }
+    .secondary { background: #252830; color: #e6e6e6; }
+    #status { margin-top: 8px; font-size: 12px; min-height: 1.2em; }
+    .ok { color: #6ee7a0; } .err { color: #f87171; }
+    label { font-size: 12px; display: block; margin-top: 8px; }
+    input { width: 100%; box-sizing: border-box; margin-top: 4px; padding: 6px; border-radius: 6px; border: 1px solid #333; background: #1a1d24; color: #fff; }
+  </style>
+</head>
+<body>
+  <h1>🧠 第二大脑</h1>
+  <p class="muted" id="bridge-status">检查桥接…</p>
+  <button class="primary" id="btn-chat">沉淀当前 AI 对话</button>
+  <button class="secondary" id="btn-page">沉淀本页正文</button>
+  <label>桥接地址 <input id="bridge" value="http://127.0.0.1:5892" /></label>
+  <div id="status"></div>
+  <script src="popup.js"></script>
+</body>
+</html>

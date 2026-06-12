@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>账号配额驾驶舱</title>
+<style>
+  :root{--bg:#0a0c10;--card:#141820;--border:#2a3140;--text:#e8eaed;--muted:#9aa3b2;--ok:#34d399;--warn:#fbbf24;--bad:#f87171;--accent:#60a5fa}
+  *{box-sizing:border-box} body{font-family:system-ui,sans-serif;margin:0;background:var(--bg);color:var(--text);line-height:1.45}
+  .wrap{max-width:1100px;margin:0 auto;padding:1.25rem}
+  h1{font-size:1.35rem;margin:0 0 .25rem} h2{font-size:1.05rem;margin:1.5rem 0 .75rem;border-bottom:1px solid var(--border);padding-bottom:.35rem}
+  h3{font-size:.95rem;margin:0}
+  .muted{color:var(--muted)} .bad{color:var(--bad)} .tiny{font-size:.75rem}
+  .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.65rem;margin:1rem 0}
+  .summary .box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.75rem}
+  .summary strong{font-size:1.2rem;display:block}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:.45rem .9rem;cursor:pointer;margin-right:.5rem}
+  .company{margin-top:1rem}
+  .acc-grid{display:flex;flex-direction:column;gap:.85rem}
+  .acc-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem}
+  .acc-card header{display:flex;justify-content:space-between;gap:.75rem;align-items:flex-start}
+  .tag{font-size:.72rem;padding:.15rem .45rem;border-radius:6px;background:#252b36}
+  .tag.ok{color:var(--ok)} .tag.critical{color:var(--bad)} .tag.warn{color:var(--warn)}
+  .tier,.today{font-size:.85rem;margin:.5rem 0}
+  .quota-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:.5rem}
+  .quota-table th,.quota-table td{border-top:1px solid var(--border);padding:.45rem .35rem;vertical-align:top;text-align:left}
+  .quota-table th{color:var(--muted);font-weight:500}
+  .track{height:8px;background:#252b36;border-radius:4px;overflow:hidden;max-width:220px}
+  .bar{height:100%} .bar.ok{background:var(--ok)} .bar.warn{background:var(--warn)} .bar.critical{background:var(--bad)}
+  .pct{font-weight:600;white-space:nowrap} .remain{font-size:.72rem}
+  .balance{color:var(--accent);font-weight:600}
+  .model{font-size:.72rem}
+  .notes{margin:.35rem 0 0 1rem;font-size:.78rem}
+  a{color:var(--accent)}
+  </style></head><body>
+<div class="wrap">
+<h1>📊 账号配额驾驶舱</h1>
+<p class="muted">更新于 2026-06-12T04:08:36.598Z · 缓存 300s
+      <button onclick="refresh(true)">强制刷新</button>
+      <button onclick="location.reload()">重载页面</button>
+      <a href="dashboard.html">← 第二大脑总览</a></p>
+    <script>
+    async function refresh(force){
+      const u='http://127.0.0.1:5892/brain/cockpit'+(force?'?force=1':'');
+      document.body.style.opacity='0.6';
+      await fetch(u).catch(()=>{});
+      location.reload();
+    }
+    setInterval(()=>location.reload(),300000);
+    </script>
+<div class="summary">
+  <div class="box"><span class="muted">账号总数</span><strong>7</strong></div>
+  <div class="box"><span class="muted">限流中</span><strong class="bad">0</strong></div>
+  <div class="box"><span class="muted">≥90% 告警</span><strong class="bad">0</strong></div>
+  <div class="box"><span class="muted">≥70% 注意</span><strong class="warn">0</strong></div>
+  <div class="box"><span class="muted">错误账号</span><strong>0</strong></div>
+</div>
+<section class="company">
+        <h2>Anthropic <span class="muted">(1 个账号 · 最高用量 0%)</span></h2>
+        <div class="acc-grid"><article class="acc-card ok">
+    <header>
+      <div>
+        <h3>claude api</h3>
+        <p class="muted">Claude · apikey · ID 1
+           · Coding, All, Claude API</p>
+      </div>
+      <span class="tag ok">active</span>
+    </header>
+    
+    <p class="today">今日 API 用量: <strong>35</strong> 次 · <strong>19,161</strong> tokens · 费用 <strong>$0.1157</strong></p>
+    <p class="bad">用量查询: HTTP 500: internal error</p>
+    <table class="quota-table">
+      <thead><tr><th>额度项</th><th>已用</th><th>进度</th><th>详情 / 重置</th></tr></thead>
+      <tbody><tr class="metric ok">
+      <td>今日 API 调用量</td>
+      <td colspan="2"><span class="balance">35 次</span> <span class="muted">(19,161 tokens · $0.1157)</span></td>
+      <td class="muted">费用为 Sub2API 计费统计</td>
+    </tr></tbody>
+    </table>
+    <ul class="notes"><li class="muted">本站今日调度: 35 次 · 19161 tokens · $0.1157</li><li class="muted">未配置 Sub2API 日/周额度上限；以下为今日经本站转发的 API 用量（非上游控制台余额）</li></ul>
+    
+  </article></div>
+      </section><section class="company">
+        <h2>DeepSeek <span class="muted">(1 个账号 · 最高用量 0%)</span></h2>
+        <div class="acc-grid"><article class="acc-card ok">
+    <header>
+      <div>
+        <h3>DeepSeek</h3>
+        <p class="muted">API（OpenAI 兼容） · apikey · ID 5
+           · All, DeepSeek, Coding</p>
+      </div>
+      <span class="tag ok">active</span>
+    </header>
+    
+    <p class="today">今日 API 用量: <strong>6</strong> 次 · <strong>487</strong> tokens · 费用 <strong>$0.0000</strong></p>
+    <p class="bad">用量查询: HTTP 500: internal error</p>
+    <table class="quota-table">
+      <thead><tr><th>额度项</th><th>已用</th><th>进度</th><th>详情 / 重置</th></tr></thead>
+      <tbody><tr class="metric ok">
+      <td>今日 API 调用量</td>
+      <td colspan="2"><span class="balance">6 次</span> <span class="muted">(487 tokens · $0.0000)</span></td>
+      <td class="muted">费用为 Sub2API 计费统计</td>
+    </tr></tbody>
+    </table>
+    <ul class="notes"><li class="muted">本站今日调度: 6 次 · 487 tokens · $0.0000</li><li class="muted">未配置 Sub2API 日/周额度上限；以下为今日经本站转发的 API 用量（非上游控制台余额）</li></ul>
+    
+  </article></div>
+      </section><section class="company">
+        <h2>Google <span class="muted">(2 个账号 · 最高用量 0%)</span></h2>
+        <div class="acc-grid"><article class="acc-card ok">
+    <header>
+      <div>
+        <h3>google one</h3>
+        <p class="muted">Gemini · Google One · oauth · ID 2
+           · All, Gemini</p>
+      </div>
+      <span class="tag ok">active</span>
+    </header>
+    <p class="tier">套餐/层级: <strong>google_ai_pro</strong></p>
+    <p class="today">今日 API 用量: <strong>0</strong> 次 · <strong>0</strong> tokens · 费用 <strong>$0.0000</strong></p>
+    
+    <table class="quota-table">
+      <thead><tr><th>额度项</th><th>已用</th><th>进度</th><th>详情 / 重置</th></tr></thead>
+      <tbody><tr class="metric ok">
+    <td>Gemini 日共享</td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted">0 / 1500 requests<br/>今日窗: 0 req · 0 tok · $0.0000<br/>2h51m 后重置</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 分钟共享</td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted">0 / 120 requests<br/>今日窗: 0 req · 0 tok · $0.0000<br/>0m 后重置</td>
+  </tr></tbody>
+    </table>
+    
+    <p class="muted tiny">用量更新: 2026/6/11 22:08:34</p>
+  </article><article class="acc-card ok">
+    <header>
+      <div>
+        <h3>google one auth for antigravity</h3>
+        <p class="muted">Antigravity（AI Studio） · oauth · ID 3
+           · Antigravity, All</p>
+      </div>
+      <span class="tag ok">active</span>
+    </header>
+    <p class="tier">套餐/层级: <strong>PRO</strong></p>
+    <p class="today">今日 API 用量: <strong>0</strong> 次 · <strong>0</strong> tokens · 费用 <strong>$0.0000</strong></p>
+    
+    <table class="quota-table">
+      <thead><tr><th>额度项</th><th>已用</th><th>进度</th><th>详情 / 重置</th></tr></thead>
+      <tbody><tr class="metric ok">
+    <td>5 小时窗口</td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>4h59m 后重置</td>
+  </tr><tr class="metric ok">
+    <td>Claude 模型<br/><span class="muted model">Claude Opus 4.6 (Thinking)</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Claude 模型<br/><span class="muted model">Claude Sonnet 4.6 (Thinking)</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 3.1 Flash Lite</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 3.1 Flash Lite</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 3.1 Flash Lite</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 2.5 Pro</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 3 Flash</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 3.5 Flash (High)</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 3.1 Flash Image</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 3.1 Flash Lite</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 3.1 Pro (High)</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 3.1 Pro (Low)</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 3.5 Flash (Low)</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 3.5 Flash (Medium)</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Gemini 模型<br/><span class="muted model">Gemini 3.1 Pro (High)</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>GPT 模型<br/><span class="muted model">GPT-OSS 120B (Medium)</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>6/12 03:08</td>
+  </tr><tr class="metric ok">
+    <td>Chat 配额<br/><span class="muted model">chat_20706</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"></td>
+  </tr><tr class="metric ok">
+    <td>Chat 配额<br/><span class="muted model">chat_23310</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"></td>
+  </tr><tr class="metric ok">
+    <td>其他模型<br/><span class="muted model">tab_flash_lite_preview</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"></td>
+  </tr><tr class="metric ok">
+    <td>其他模型<br/><span class="muted model">tab_jump_flash_lite_preview</span></td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"></td>
+  </tr><tr class="metric ok">
+      <td>账户余额 · GOOGLE_ONE_AI</td>
+      <td colspan="2"><span class="balance">1488 USD</span> <span class="muted">(最低 50)</span></td>
+      <td class="muted"></td>
+    </tr></tbody>
+    </table>
+    
+    <p class="muted tiny">用量更新: 2026/6/11 22:08:36</p>
+  </article></div>
+      </section><section class="company">
+        <h2>MiniMax <span class="muted">(1 个账号 · 最高用量 0%)</span></h2>
+        <div class="acc-grid"><article class="acc-card ok">
+    <header>
+      <div>
+        <h3>minimax-海外</h3>
+        <p class="muted">MiniMax（Anthropic 协议） · apikey · ID 7
+           · All, MiniMax</p>
+      </div>
+      <span class="tag ok">active</span>
+    </header>
+    
+    <p class="today">今日 API 用量: <strong>0</strong> 次 · <strong>0</strong> tokens · 费用 <strong>$0.0000</strong></p>
+    <p class="bad">用量查询: HTTP 500: internal error</p>
+    <table class="quota-table">
+      <thead><tr><th>额度项</th><th>已用</th><th>进度</th><th>详情 / 重置</th></tr></thead>
+      <tbody><tr class="metric ok">
+      <td>今日 API 调用量</td>
+      <td colspan="2"><span class="balance">0 次</span> <span class="muted">(0 tokens · $0.0000)</span></td>
+      <td class="muted">费用为 Sub2API 计费统计</td>
+    </tr></tbody>
+    </table>
+    <ul class="notes"><li class="muted">未配置 Sub2API 日/周额度上限；以下为今日经本站转发的 API 用量（非上游控制台余额）</li></ul>
+    
+  </article></div>
+      </section><section class="company">
+        <h2>Moonshot AI <span class="muted">(1 个账号 · 最高用量 0%)</span></h2>
+        <div class="acc-grid"><article class="acc-card ok">
+    <header>
+      <div>
+        <h3>kimi</h3>
+        <p class="muted">Kimi API · apikey · ID 6
+           · Coding, All, Kimi</p>
+      </div>
+      <span class="tag ok">active</span>
+    </header>
+    
+    <p class="today">今日 API 用量: <strong>0</strong> 次 · <strong>0</strong> tokens · 费用 <strong>$0.0000</strong></p>
+    <p class="bad">用量查询: HTTP 500: internal error</p>
+    <table class="quota-table">
+      <thead><tr><th>额度项</th><th>已用</th><th>进度</th><th>详情 / 重置</th></tr></thead>
+      <tbody><tr class="metric ok">
+      <td>今日 API 调用量</td>
+      <td colspan="2"><span class="balance">0 次</span> <span class="muted">(0 tokens · $0.0000)</span></td>
+      <td class="muted">费用为 Sub2API 计费统计</td>
+    </tr></tbody>
+    </table>
+    <ul class="notes"><li class="muted">未配置 Sub2API 日/周额度上限；以下为今日经本站转发的 API 用量（非上游控制台余额）</li></ul>
+    
+  </article></div>
+      </section><section class="company">
+        <h2>OpenAI <span class="muted">(1 个账号 · 最高用量 1%)</span></h2>
+        <div class="acc-grid"><article class="acc-card ok">
+    <header>
+      <div>
+        <h3>openai</h3>
+        <p class="muted">ChatGPT / Codex OAuth · oauth · ID 4
+           · All, OpenAI</p>
+      </div>
+      <span class="tag ok">active</span>
+    </header>
+    
+    <p class="today">今日 API 用量: <strong>0</strong> 次 · <strong>0</strong> tokens · 费用 <strong>$0.0000</strong></p>
+    
+    <table class="quota-table">
+      <thead><tr><th>额度项</th><th>已用</th><th>进度</th><th>详情 / 重置</th></tr></thead>
+      <tbody><tr class="metric ok">
+    <td>5 小时窗口</td>
+    <td class="pct">1%</td>
+    <td><div class="track"><div class="bar ok" style="width:1%"></div></div>
+      <span class="muted remain">剩余 99%</span></td>
+    <td class="muted"><br/>今日窗: 0 req · 0 tok · $0.0000<br/>4h59m 后重置</td>
+  </tr><tr class="metric ok">
+    <td>7 天窗口</td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"><br/>今日窗: 0 req · 0 tok · $0.0000<br/>167h59m 后重置</td>
+  </tr><tr class="metric ok">
+    <td>Codex 5h</td>
+    <td class="pct">1%</td>
+    <td><div class="track"><div class="bar ok" style="width:1%"></div></div>
+      <span class="muted remain">剩余 99%</span></td>
+    <td class="muted"></td>
+  </tr><tr class="metric ok">
+    <td>Codex 7d</td>
+    <td class="pct">0%</td>
+    <td><div class="track"><div class="bar ok" style="width:0%"></div></div>
+      <span class="muted remain">剩余 100%</span></td>
+    <td class="muted"></td>
+  </tr></tbody>
+    </table>
+    
+    <p class="muted tiny">用量更新: 2026/6/11 22:08:34</p>
+  </article></div>
+      </section>
+<p class="muted tiny" style="margin-top:2rem">
+  OAuth 账号（Claude/OpenAI/Gemini）显示上游官方窗口额度百分比；API Key 账号显示 Sub2API 今日调用量与已配置的日/周/总额度。
+  上游 API 余额（DeepSeek/Kimi 控制台余额）需服务商支持查询，当前仅展示本站统计的费用与次数。
+</p>
+</div></body></html>

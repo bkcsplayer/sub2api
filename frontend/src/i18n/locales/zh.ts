@@ -363,6 +363,7 @@ export default {
     availableChannels: '可用渠道',
     subscriptions: '订阅管理',
     accounts: '账号管理',
+    quotaCockpit: '配额驾驶舱',
     proxies: 'IP管理',
     redeemCodes: '兑换码',
     ops: '运维监控',
@@ -3052,6 +3053,26 @@ export default {
     },
 
     // Accounts Management
+    quotaCockpit: {
+      title: '配额驾驶舱',
+      description: '按服务商查看所有上游账号的窗口额度（百分比）、今日 API 用量与配置的配额上限。',
+      manageAccounts: '账号管理',
+      lastUpdated: '更新时间',
+      accountCount: '{count} 个账号',
+      todayUsage: '今日用量',
+      apiKeyHint: 'API Key 账号：显示本站今日转发统计；上游控制台余额需在服务商后台查看。',
+      configuredQuota: 'Sub2API 配置的额度上限',
+      footnote:
+        'OAuth 账号的 5h/7d/Gemini 窗口额度来自上游官方限制；API Key 账号若未配置日/周限额，仅显示今日调用统计。',
+      stats: {
+        total: '账号总数',
+        rateLimited: '限流中',
+        critical: '≥90%',
+        warn: '≥70%',
+        companies: '服务商'
+      }
+    },
+
     accounts: {
       title: '账号管理',
       description: '管理 AI 平台账号和 Cookie',

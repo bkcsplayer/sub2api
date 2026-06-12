@@ -363,6 +363,7 @@ export default {
     availableChannels: 'Available Channels',
     subscriptions: 'Subscriptions',
     accounts: 'Accounts',
+    quotaCockpit: 'Quota Cockpit',
     proxies: 'Proxies',
     redeemCodes: 'Redeem Codes',
     ops: 'Ops',
@@ -2972,6 +2973,28 @@ export default {
           revokeDesc: 'Immediately terminate the subscription (irreversible)'
         },
         tip: 'Tip: Only groups with billing type "Subscription" and status "Active" appear in the group dropdown. If no options are available, create one in Group Management first.'
+      }
+    },
+
+    quotaCockpit: {
+      title: 'Quota Cockpit',
+      description:
+        'View upstream account window quotas (%), today API usage, and configured limits grouped by provider.',
+      manageAccounts: 'Account Management',
+      lastUpdated: 'Last updated',
+      accountCount: '{count} accounts',
+      todayUsage: 'Today',
+      apiKeyHint:
+        'API Key accounts show today\'s relay stats here; upstream wallet balance is on the provider console.',
+      configuredQuota: 'Sub2API configured limits',
+      footnote:
+        'OAuth windows (5h/7d/Gemini) come from upstream; API keys without daily/weekly limits show today\'s usage only.',
+      stats: {
+        total: 'Accounts',
+        rateLimited: 'Rate limited',
+        critical: '≥90%',
+        warn: '≥70%',
+        companies: 'Providers'
       }
     },
 

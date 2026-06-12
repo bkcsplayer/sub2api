@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>第二大脑 · 控制台</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:960px;margin:2rem auto;padding:0 1rem;background:#0f1115;color:#e6e6e6}
+  h1{font-size:1.4rem} h2{font-size:1.1rem;margin-top:1.6rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+  .card{background:#1a1d24;border:1px solid #2a2f3a;border-radius:10px;padding:1rem}
+  .ok{color:#6ee7a0}.bad{color:#f87171}.muted{color:#9ca3af;font-size:.9rem}
+  a{color:#93c5fd} ul{padding-left:1.2rem} li{margin:.4rem 0}
+  code{background:#252830;padding:.1rem .35rem;border-radius:4px;font-size:.85rem}
+  .accounts{display:flex;flex-direction:column;gap:.75rem}
+  .acc{background:#1a1d24;border:1px solid #2a2f3a;border-radius:8px;padding:.75rem}
+  .acc-head{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+  .tag{font-size:.75rem;padding:.1rem .45rem;border-radius:4px;background:#252830}
+  .tag.critical{background:#7f1d1d;color:#fecaca}
+  .tag.warn{background:#78350f;color:#fde68a}
+  .tag.ok{background:#14532d;color:#bbf7d0}
+  .metric{display:grid;grid-template-columns:7rem 1fr 3rem;gap:.5rem;align-items:center;font-size:.85rem;margin:.35rem 0}
+  .track{height:8px;background:#252830;border-radius:4px;overflow:hidden}
+  .bar{height:100%;border-radius:4px}
+  .bar.ok{background:#22c55e}.bar.warn{background:#eab308}.bar.critical{background:#ef4444}
+  .balance{color:#93c5fd}
+  button{background:#3b82f6;color:#fff;border:0;padding:.45rem .9rem;border-radius:6px;cursor:pointer;margin-right:.5rem}
+</style></head><body>
+<h1>🧠 第二大脑 · 控制台</h1>
+<p class="muted">生成于 2026/6/11 21:53:23 · <button onclick="location.reload()">刷新</button><button onclick="refreshCockpit()">拉取最新配额</button></p>
+<div class="grid">
+  <div class="card"><strong>桥接 :5892</strong><br/><span class="ok">运行中</span></div>
+  <div class="card"><strong>Khoj :5871</strong><br/><span class="ok">运行中</span></div>
+  <div class="card"><strong>知识卡片</strong><br/>1 张</div>
+  <div class="card"><strong>待审核</strong><br/>1 张</div>
+  <div class="card"><strong>对话审计</strong><br/>4 次 · 沉淀 0</div>
+</div>
+<h2>账号配额 · 百分比</h2>
+<div id="cockpit"><p class="muted">缓存于 2026-06-12T03:53:11.492Z · 账号 7 · 限流 0 · ≥90% 0 · ≥70% 0</p><div class="accounts"><div class="acc active">
+      <div class="acc-head"><strong>openai</strong> <span class="muted">openai · oauth</span>
+      <span class="tag ok">active</span></div><div class="metrics"><div class="metric"><span>Codex 5h</span><div class="track"><div class="bar ok" style="width:1%"></div></div><span>1%</span></div><div class="metric"><span>Codex 7d</span><div class="track"><div class="bar ok" style="width:0%"></div></div><span>0%</span></div></div></div><div class="acc active">
+      <div class="acc-head"><strong>claude api</strong> <span class="muted">anthropic · apikey</span>
+      <span class="tag ok">active</span></div><p class="muted">无配额指标</p></div><div class="acc active">
+      <div class="acc-head"><strong>google one</strong> <span class="muted">gemini · oauth</span>
+      <span class="tag ok">active</span></div><p class="muted">无配额指标</p></div><div class="acc active">
+      <div class="acc-head"><strong>google one auth for antigravity</strong> <span class="muted">antigravity · oauth</span>
+      <span class="tag ok">active</span></div><p class="muted">无配额指标</p></div><div class="acc active">
+      <div class="acc-head"><strong> DeepSeek  </strong> <span class="muted">openai · apikey</span>
+      <span class="tag ok">active</span></div><p class="muted">无配额指标</p></div><div class="acc active">
+      <div class="acc-head"><strong>kimi</strong> <span class="muted">openai · apikey</span>
+      <span class="tag ok">active</span></div><p class="muted">无配额指标</p></div><div class="acc active">
+      <div class="acc-head"><strong>minimax-海外</strong> <span class="muted">anthropic · apikey</span>
+      <span class="tag ok">active</span></div><p class="muted">无配额指标</p></div></div></div>
+<h2>最近知识卡片</h2>
+<ul><li><strong>Khoj 启动卡住：通过 PowerShell 脚本修复 database_aimodelapi</strong> <span class="muted">[Projects]</span></li></ul>
+<h2>快捷入口</h2>
+<ul>
+  <li><a href="http://localhost:5871">Khoj 搜索</a></li>
+  <li><a href="https://coolapihub.khtain.com/admin/dashboard">Sub2API 管理后台</a></li>
+</ul>
+<h2>Chrome 扩展</h2>
+<p class="muted">加载未打包扩展：<code>deploy/chrome-extension</code> → chrome://extensions → 开发者模式 → 加载已解压的扩展程序</p>
+<script>
+async function refreshCockpit(){
+  const el=document.getElementById('cockpit');
+  el.innerHTML='<p class="muted">拉取中…</p>';
+  try{
+    const r=await fetch('http://127.0.0.1:5892/brain/cockpit?force=1');
+    const d=await r.json();
+    if(d.error) throw new Error(d.error);
+    location.reload();
+  }catch(e){el.innerHTML='<p class="bad">'+e.message+'</p>';}
+}
+</script>
+</body></html>

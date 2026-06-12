@@ -1,0 +1,54 @@
+{
+  "apiBase": "http://127.0.0.1:5892",
+  "providers": [
+    {
+      "id": "new-api",
+      "name": "CoolAPIHub Claude",
+      "type": "new-api",
+      "system": true,
+      "envKey": "SUB2API_KEY_CLAUDE"
+    },
+    {
+      "id": "anthropic",
+      "name": "CoolAPIHub Claude",
+      "type": "anthropic",
+      "system": true,
+      "envKey": "SUB2API_KEY_CLAUDE"
+    },
+    {
+      "id": "coolapihub-openai",
+      "name": "CoolAPIHub OpenAI",
+      "type": "openai",
+      "system": false,
+      "envKey": "SUB2API_KEY_OPENAI"
+    },
+    {
+      "id": "coolapihub-deepseek",
+      "name": "CoolAPIHub DeepSeek",
+      "type": "openai",
+      "system": false,
+      "envKey": "SUB2API_KEY_DEEPSEEK"
+    },
+    {
+      "id": "coolapihub-kimi",
+      "name": "CoolAPIHub Kimi",
+      "type": "openai",
+      "system": false,
+      "envKey": "SUB2API_KEY_KIMI"
+    },
+    {
+      "id": "coolapihub-gemini",
+      "name": "CoolAPIHub Gemini",
+      "type": "gemini",
+      "system": false,
+      "envKey": "SUB2API_KEY_GEMINI"
+    },
+    {
+      "id": "coolapihub-minimax",
+      "name": "CoolAPIHub MiniMax",
+      "type": "anthropic",
+      "system": false,
+      "envKey": "SUB2API_KEY_MINIMAX"
+    }
+  ]
+}

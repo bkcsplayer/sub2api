@@ -489,6 +489,18 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    path: '/admin/quota-cockpit',
+    name: 'AdminQuotaCockpit',
+    component: () => import('@/views/admin/QuotaCockpitView.vue'),
+    meta: {
+      requiresAuth: true,
+      requiresAdmin: true,
+      title: 'Quota Cockpit',
+      titleKey: 'admin.quotaCockpit.title',
+      descriptionKey: 'admin.quotaCockpit.description'
+    }
+  },
+  {
     path: '/admin/announcements',
     name: 'AdminAnnouncements',
     component: () => import('@/views/admin/AnnouncementsView.vue'),

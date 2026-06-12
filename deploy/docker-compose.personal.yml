@@ -1,0 +1,5 @@
+# 已切换为 VPS 模式：仅本地 Khoj，Sub2API 走线上 coolapihub
+# 使用: docker compose -f docker-compose.khoj.yml up -d
+
+include:
+  - docker-compose.khoj.yml

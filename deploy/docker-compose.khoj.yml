@@ -1,0 +1,97 @@
+# =============================================================================
+# Khoj 知识库（本地 Docker）— 模型走 VPS Sub2API
+# =============================================================================
+#   docker compose -f docker-compose.khoj.yml up -d
+#   Khoj: http://localhost:5871
+#   上游: https://api.coolapihub.khtain.com/v1
+# =============================================================================
+
+name: sub2api-khoj
+
+services:
+  khoj-database:
+    image: pgvector/pgvector:pg15
+    container_name: khoj-postgres
+    restart: unless-stopped
+    volumes:
+      - ./brain/data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${KHOJ_POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${KHOJ_POSTGRES_PASSWORD:?KHOJ_POSTGRES_PASSWORD is required}
+      - POSTGRES_DB=${KHOJ_POSTGRES_DB:-postgres}
+      - TZ=${TZ:-Asia/Shanghai}
+    networks:
+      - khoj-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${KHOJ_POSTGRES_USER:-postgres}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+
+  khoj-sandbox:
+    image: ghcr.io/khoj-ai/terrarium:latest
+    container_name: khoj-sandbox
+    restart: unless-stopped
+    networks:
+      - khoj-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  khoj-search:
+    image: searxng/searxng:latest
+    container_name: khoj-search
+    restart: unless-stopped
+    volumes:
+      - ./brain/data/searxng:/etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8080/
+    networks:
+      - khoj-network
+
+  khoj:
+    image: ghcr.io/khoj-ai/khoj:latest
+    container_name: khoj
+    restart: unless-stopped
+    depends_on:
+      khoj-database:
+        condition: service_healthy
+      khoj-sandbox:
+        condition: service_healthy
+    ports:
+      - "${BIND_HOST:-0.0.0.0}:${KHOJ_PORT:-5871}:42110"
+    working_dir: /app
+    volumes:
+      - ./brain/data/khoj_config:/root/.khoj
+      - ./brain/data/models:/root/.cache/torch/sentence_transformers
+      - ./brain/data/models:/root/.cache/huggingface
+      - ./brain/obsidian-vault:/data/obsidian:ro
+      - ./brain/imports:/data/imports:ro
+    environment:
+      - POSTGRES_DB=${KHOJ_POSTGRES_DB:-postgres}
+      - POSTGRES_USER=${KHOJ_POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${KHOJ_POSTGRES_PASSWORD:?KHOJ_POSTGRES_PASSWORD is required}
+      - POSTGRES_HOST=khoj-database
+      - POSTGRES_PORT=5432
+      - KHOJ_DJANGO_SECRET_KEY=${KHOJ_DJANGO_SECRET_KEY:?KHOJ_DJANGO_SECRET_KEY is required}
+      - KHOJ_DEBUG=False
+      - KHOJ_ADMIN_EMAIL=${KHOJ_ADMIN_EMAIL:-brain@localhost}
+      - KHOJ_ADMIN_PASSWORD=${KHOJ_ADMIN_PASSWORD:?KHOJ_ADMIN_PASSWORD is required}
+      - KHOJ_TERRARIUM_URL=http://khoj-sandbox:8080
+      - KHOJ_SEARXNG_URL=http://khoj-search:8080
+      - KHOJ_NO_HTTPS=True
+      - KHOJ_TELEMETRY_DISABLE=True
+      - OPENAI_BASE_URL=${SUB2API_REMOTE_URL:-https://api.coolapihub.khtain.com/v1/}
+      - OPENAI_API_KEY=${SUB2API_API_KEY:-replace-me-run-set-api-key}
+      - TZ=${TZ:-Asia/Shanghai}
+    networks:
+      - khoj-network
+    command: --host=0.0.0.0 --port=42110 -vv --anonymous-mode --non-interactive
+
+networks:
+  khoj-network:
+    driver: bridge

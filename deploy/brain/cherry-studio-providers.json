@@ -1,0 +1,35 @@
+{
+  "_verified": "2026-06-11 API Key 已写入 .env，claude-sonnet-4-20250514 经 /v1/chat/completions 可用",
+  "sub2api_remote": "https://api.coolapihub.khtain.com",
+  "providers": [
+    {
+      "name": "CoolAPIHub Claude (推荐)",
+      "type": "anthropic",
+      "api_base": "https://api.coolapihub.khtain.com",
+      "api_path": "/v1/messages",
+      "api_key": "已配置在本地 .env，Cherry 里粘贴同一 sk-",
+      "models": ["claude-sonnet-4-20250514"]
+    },
+    {
+      "name": "CoolAPIHub OpenAI 兼容",
+      "type": "openai",
+      "api_base": "https://api.coolapihub.khtain.com/v1",
+      "api_key": "同上",
+      "models": ["claude-sonnet-4-20250514"],
+      "note": "部分 OpenAI 模型名可能 503，以 VPS 分组白名单为准"
+    },
+    {
+      "name": "CoolAPIHub Antigravity",
+      "type": "anthropic",
+      "api_base": "https://api.coolapihub.khtain.com",
+      "api_path": "/antigravity/v1/messages",
+      "api_key": "同上",
+      "models": ["按 Antigravity 分组填写"]
+    }
+  ],
+  "khoj": {
+    "url": "http://localhost:5871",
+    "openai_base_in_docker": "https://api.coolapihub.khtain.com/v1/",
+    "suggested_model_in_settings": "claude-sonnet-4-20250514"
+  }
+}

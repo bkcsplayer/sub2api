@@ -6,6 +6,16 @@
 data/
 postgres_data/
 redis_data/
+brain/data/
+brain/cherry-persist-preview.json
+brain/exports/
+brain/imports/cherry/
+brain/obsidian-vault/Projects/
+brain/**/*.log
+
+# Chrome extension signing artifacts (local only)
+chrome-extension.pem
+chrome-extension.crx
 
 # Environment configuration (contains sensitive information)
 .env
@@ -17,3 +27,6 @@ redis_data/
 # Temporary files
 *.tmp
 *.log
+
+# Local script dependencies (level/cherry tooling)
+scripts/node_modules/

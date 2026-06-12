@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "第二大脑 · Brain Clip",
+  "version": "0.1.2",
+  "description": "采集网页 AI 对话与页面内容，沉淀到 Khoj 知识库（经本地桥接 5892）",
+  "permissions": ["activeTab", "storage", "contextMenus", "scripting"],
+  "host_permissions": [
+    "http://127.0.0.1:5892/*",
+    "http://localhost:5892/*",
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*",
+    "https://claude.ai/*",
+    "https://gemini.google.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "第二大脑"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chatgpt.com/*", "https://chat.openai.com/*"],
+      "js": ["content/chat-openai.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://claude.ai/*"],
+      "js": ["content/chat-claude.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "js": ["content/chat-gemini.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
